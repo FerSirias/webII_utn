@@ -1,0 +1,62 @@
+/*Estilos de la tabla de main.php*/
+table {
+    width: 100%;
+}
+
+td {
+    background-color: rgb(199, 139, 35);
+    color: white;
+    padding: 5px;
+}
+
+th {
+    background-color: rgb(199, 155, 35);
+    color: white;
+    padding: 5px;
+}
+
+table th, table td {
+    border: 2px solid black;
+}
+
+/*Estilos de la tabla de jugador.php*/
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
