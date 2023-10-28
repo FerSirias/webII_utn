@@ -186,7 +186,59 @@
         </div>
       </div>
       <!-- end event block -->
-      </div>  			
+      </div>
+      <div class="container mt-5">
+    <h3 class="mb-4">Si tienes alguna duda, deja un comentario:</h3>
+    <div class="col-12 linea_sep">
+    <?php 
+    if(isLoggedIn()){ 
+    ?>
+    <form>
+        <!-- No pide el nombre porque está logueado-->
+        <!-- Área para el comentario -->
+        <div class="mb-3">
+            <label for="commentText" class="form-label">Comentario</label>
+            <textarea class="form-control" id="commentText" rows="4" placeholder="Escribe tu comentario"></textarea>
+        </div>
+
+        <!-- Botón para enviar el comentario -->
+        <div class="mb-4">
+            <button type="submit" class="btn btn-info">Enviar Comentario</button>
+        </div>
+    </form>
+    <?php 
+    } else {
+    ?>
+        <form>
+            <!-- Debe perdir el nombre porque no está logueado-->
+            <div class="mb-3">
+                <label for="commentName" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="commentName" placeholder="Ingresa tu nombre">
+            </div>
+
+            <!-- Área para el comentario -->
+            <div class="mb-3">
+                <label for="commentText" class="form-label">Comentario</label>
+               <textarea class="form-control" id="commentText" rows="4" placeholder="Escribe tu comentario"></textarea>
+    </div>
+
+            <!-- Botón para enviar el comentario -->
+            <div class="mb-4">
+                <button type="submit" class="btn btn-info">Enviar Comentario</button>
+            </div>
+        </form> 
+    <?php 
+    }
+    ?>
+</div>
+
+    <!-- Sección donde se reflejarán los comentarios -->
+    <h4 class="my-4">Comentarios:</h4>
+    <div class="border p-3 mb-4">
+        <strong>Nombre del usuario</strong>
+        <p>Este es un comentario de ejemplo. ¡Qué gran artículo!</p>
+    </div>
+    <!-- Puedes duplicar el div anterior para simular múltiples comentarios --> 			
 			</main>
 			<footer class="col-12 linea_sep">
 				<?php

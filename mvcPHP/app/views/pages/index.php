@@ -77,11 +77,12 @@
         </div>
     </div>
 </div>
-
 			<main class="col-12 linea_sep">
 				<?php
 					if(isLoggedIn()){
-						echo "Usted es: " . $_SESSION['usuario'];
+                ?>
+                        <h5><?php echo "Ha iniciado una sesión exitosa el usuario: " . $_SESSION['usuario'] ; ?></h5>
+                <?php
 					}else{
 						echo "Si aún no formas parte de nuestra organización, 
 						Por favor autentiquese ante nosotros...";
