@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8' ?><informacion>   <generalidades>      <empresa>         <nombre>Univesidad Técnica Nacional</nombre>         <carrera>Tecnologías de la Información</carrera>         <curso>Tecnologías y Sistemas Web2</curso>      </empresa>      <profesor>         <nombre>Jorge Ruiz</nombre>         <experiencia>Profesor en programación desde 1993</experiencia>      </profesor>   </generalidades>   <clasificacion><categoria>
+		                         <codigo>1</codigo>
+		                         <nombre>Beverages</nombre>
+						         <descripcion>Soft drinks, coffees, teas, beers, and ales</descripcion>
+					         </categoria><categoria>
+		                         <codigo>2</codigo>
+		                         <nombre>Condiments</nombre>
+						         <descripcion>Sweet and savory sauces, relishes, spreads, and seasonings</descripcion>
+					         </categoria><categoria>
+		                         <codigo>3</codigo>
+		                         <nombre>Confections</nombre>
+						         <descripcion>Desserts, candies, and sweet breads</descripcion>
+					         </categoria><categoria>
+		                         <codigo>4</codigo>
+		                         <nombre>Dairy Products</nombre>
+						         <descripcion>Cheeses</descripcion>
+					         </categoria><categoria>
+		                         <codigo>5</codigo>
+		                         <nombre>Grains/Cereals</nombre>
+						         <descripcion>Breads, crackers, pasta, and cereal</descripcion>
+					         </categoria><categoria>
+		                         <codigo>6</codigo>
+		                         <nombre>Meat/Poultry</nombre>
+						         <descripcion>Prepared meats</descripcion>
+					         </categoria><categoria>
+		                         <codigo>7</codigo>
+		                         <nombre>Produce</nombre>
+						         <descripcion>Dried fruit and bean curd</descripcion>
+					         </categoria><categoria>
+		                         <codigo>8</codigo>
+		                         <nombre>Seafood</nombre>
+						         <descripcion>Seaweed and fish</descripcion>
+					         </categoria>   </clasificacion></informacion>
