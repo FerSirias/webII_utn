@@ -43,7 +43,7 @@
         <!-- Primera fila de imágenes -->
         <div class="col-md-6">
             <div class="card mb-6">
-                <img src="public/img/perritoamoroso.jpg" class="card-img-top" alt="Imagen 2">
+                <img src="<?php echo urlRoot; ?>/public/img/perritoamoroso.jpg" class="card-img-top" alt="Imagen 2">
                 <div class="card-body">
                     <p class="card-text">JUGUETONES</p>
                 </div>
@@ -51,7 +51,7 @@
         </div>
         <div class="col-md-6">
             <div class="card mb-6">
-                <img src="public/img/perritodormilon.jpg" class="card-img-top" alt="Imagen 3">
+                <img src="<?php echo urlRoot; ?>/public/img/perritodormilon.jpg" class="card-img-top" alt="Imagen 3">
                 <div class="card-body">
                     <p class="card-text">DORMILONES</p>
                 </div>
@@ -61,7 +61,7 @@
         <!-- Segunda fila de imágenes -->
         <div class="col-md-6">
             <div class="card mb-6">
-                <img src="public/img/perritounico.jpg" class="card-img-top" alt="Imagen 5">
+                <img src="<?php echo urlRoot; ?>/public/img/perritounico.jpg" class="card-img-top" alt="Imagen 5">
                 <div class="card-body">
                     <p class="card-text">ÚNICOS</p>
                 </div>
@@ -69,7 +69,7 @@
         </div>
         <div class="col-md-6">
             <div class="card mb-6">
-                <img src="public/img/perrofeliz.png" class="card-img-top" alt="Imagen 6">
+                <img src="<?php echo urlRoot; ?>/public/img/perrofeliz.png" class="card-img-top" alt="Imagen 6">
                 <div class="card-body">
                     <p class="card-text">FELICES</p>
                 </div>

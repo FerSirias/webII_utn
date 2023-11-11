@@ -46,7 +46,7 @@
     <div class="row">
         <!-- Título Principal -->
         <div class="col-12 text-center mb-4">
-            <h5 class="text-info display-4">Miembros de la Junta Directiva de Huellitas de Amor Cldera</h5>
+            <h5 class="text-info display-4">Miembros de la Junta Directiva de Huellitas de Amor Caldera</h5>
             <p class="lead">¡Queremos CONTRIBUIR a un futuro mejor para el mayor número de animales posible!</p>
         </div>
     </div>
