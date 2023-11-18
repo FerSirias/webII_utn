@@ -1,0 +1,3 @@
+En la carpeta "php_05" está un archivo llamado "impresion_09",
+ese contiene el reporte que se genera a base de el código
+brindado por el usuario.
