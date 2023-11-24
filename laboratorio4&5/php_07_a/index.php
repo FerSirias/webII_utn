@@ -9,22 +9,32 @@
 	switch ($method){
 		case 'PUT':
 			if(sizeof($request)==2){
-				// update task
-				if($request[1]=='task'){
+				// update encomienda
+				if($request[1]=='update'){
+					include_once("code/updEnco.inc");
+				}
+			}else if(sizeof($request)==3){
+				if($request[2]=='task'){
+					// update task 
 					include_once("code/modtarea.inc");
 				}
 			}
 			break;
 	  	case 'POST':
 			if(sizeof($request)==1){
-				if($request[0]=='signup'){
-					// register a new user
+				if($request[0]=='register'){
+					// registrar una nueva encomienda
 					include_once("code/registerEnco.inc");
 				}
 			}else if(sizeof($request)==2){
-				if($request[1]=='task'){
-					// register a user task
-					include_once("code/addtarea.inc");
+				if($request[1]=='add'){
+					// registrar una nueva escala
+					include_once("code/registerEsca.inc");
+				}
+			}else if(sizeof($request)==3){
+				if($request[2]=='person'){
+					// registrar una nueva escala
+					include_once("code/registerPer.inc");
 				}
 			}
 			break;
@@ -68,7 +78,7 @@
 		$response["status"]=$status;
 		$response["status_message"]=$status_message;
 		$response["data"]=$data;
-		$response["author"]="york";
+		$response["author"]="fer";
 
 		$json_response=json_encode($response);
 		echo $json_response;

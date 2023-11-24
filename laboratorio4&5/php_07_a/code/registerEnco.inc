@@ -6,7 +6,8 @@
 	$valores = json_decode($data,TRUE);
 
     // Prepare SQL insert instruction
-	$auxSql = "call inspersona('".$valores['num_tracking']."','".$valores['peso_paquete']."','".$valores['idUsuario_envia']."','".$valores['idUsuario_recibe']."','".$valores['fech_encomienda']."','".$valores['costo_reportado']."','".$valores['costo_MasEnvio']."','".$valores['idEmpleado']."','".$valores['status']."')";
+	$auxSql = "call insencomienda(".$valores['peso_paquete'].",".$valores['idUsuario_envia'].",".$valores['idUsuario_recibe'].",".$valores['costo_reportado'].",".$valores['costo_MasEnvio'].",".$valores['idEmpleado'].")";
+
 
 	// Execute query over user table
 	$regis = mysqli_query($conex, $auxSql);
@@ -14,8 +15,8 @@
         // Display error information in json format
 		deliver_response(500,"Internal Server Error",mysqli_error($conex));
 	}else{
-		// Get data user from server.
-		$auxSql = "Select * from encomiendas where num_tracking = '".$valores['num_tracking']."'";
+		// Get data encomienda from server.
+		$auxSql = "SELECT * FROM paquetes_db.encomiendas where idEmpleado= ".$valores['idEmpleado']." order by fech_encomienda desc limit 1";
 		$regis = mysqli_query($conex, $auxSql);
 		$enco = mysqli_fetch_array($regis);
 
