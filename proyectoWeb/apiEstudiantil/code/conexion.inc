@@ -6,7 +6,7 @@
     $contra    = "burbuja2004";
 
     //suprime advertencias
-    error_reporting(0);
+    //error_reporting(0);
 
 	//proceso para conectar con el servidor
     if(!$conex = mysqli_connect($servidor, $usuario, $contra, $basedatos)){

@@ -1,42 +1,33 @@
 <?php
-// insertEstudiante.inc
-include_once('conexion.inc');  
+    // Get data written in json format
+	$data = file_get_contents("php://input");
 
-// Obtener los datos proporcionados en formato JSON.
-$data = file_get_contents("php://input");
-$valores = json_decode($data, TRUE);
+    // Convert json data into data array
+	$valores = json_decode($data,TRUE);
 
-// Convertir valores booleanos a enteros (1 o 0).
-$valores['AyudaFamiliar'] = $valores['AyudaFamiliar'] ? 1 : 0;
-$valores['Beca'] = $valores['Beca'] ? 1 : 0;
+    // Prepare SQL insert instruction
+	$auxSql = "call insestudiante('".$valores['ayudaFamiliar']."','".$valores['beca']."',".$valores['cantCursos'].",'".$valores['codCuatri']."')";
 
-try {
-    // Iniciar transacción.
-    $conex->begin_transaction();
 
-    // Preparar e insertar en la tabla 'estudiantes'.
-    $stmt = $conex->prepare("INSERT INTO estudiantes (Estudiante_id, CedulaEstudiante, AyudaFamiliar, Beca, CursoID) VALUES (?, ?, ?, ?, ?)");
-    // Asegúrate de que los tipos de datos en bind_param sean correctos: 'i' para enteros, 's' para cadenas.
-    $stmt->bind_param("isiii", $valores['Estudiante_id'], $valores['CedulaEstudiante'], $valores['AyudaFamiliar'], $valores['Beca'], $valores['CursoID']);
-    $stmt->execute();
+	// Execute query over user table
+	$regis = mysqli_query($conex, $auxSql);
+	if(!$regis) {
+        // Display error information in json format
+		deliver_response(500,"Internal Server Error",mysqli_error($conex));
+	}else{
+		// Get data encomienda from server.
+		$enco = mysqli_fetch_array($regis);
 
-    // Si todo fue bien, commit a la transacción.
-    $conex->commit();
-    deliver_response(201, "Estudiante creado", NULL);
-} catch (Exception $e) {
-    // Si algo falla, hacer rollback a la transacción.
-    $conex->rollback();
-    deliver_response(500, "Error interno del servidor", $e->getMessage());
-}
+		// Prepare data package like associative array
+		$estudiante = array('estudiante_id'=>$enco['estudiante_id'],
+						    'cedulaEstudiante'=>$enco['cedulaEstudiante'],
+						    'ayudaFamiliar'=>$enco['ayudaFamiliar'],
+						    'beca'=>$enco['beca']);
 
-// Función para enviar la respuesta.
-function deliver_response($status, $status_message, $data) {
-    header("HTTP/1.1 $status $status_message");
-    $response = [
-        'status' => $status,
-        'status_message' => $status_message,
-        'data' => $data
-    ];
-    echo json_encode($response);
-}
+		// Release memory from data query again
+		mysqli_free_result($regis);
+
+        //display user data in json format and http request proccess successfully
+		deliver_response(201,"Se insertó correctamente",$estudiante);
+	}
 ?>

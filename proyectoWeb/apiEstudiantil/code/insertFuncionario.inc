@@ -1,37 +1,35 @@
 <?php
-// insertFuncionario.inc
-include_once('conexion.inc'); 
+    // Get data written in json format
+	$data = file_get_contents("php://input");
 
-// Obtener los datos proporcionados en formato JSON.
-$data = file_get_contents("php://input");
-$valores = json_decode($data, TRUE);
+    // Convert json data into data array
+	$valores = json_decode($data,TRUE);
 
-try {
-    // Iniciar transacción.
-    $conex->begin_transaction();
+    // Prepare SQL insert instruction
+	$auxSql = "call insfunc(".$valores['funcionarioId'].",'".$valores['correoInstitucional']."','".$valores['password']."',".$valores['areaId'].",".$valores['rol_id'].")";
 
-    // Preparar e insertar en la tabla 'funcionarios'.
-    $stmt = $conex->prepare("INSERT INTO funcionarios (FuncionarioID, usuario_id, CedulaFuncionario, areald) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("sssi", $valores['FuncionarioID'], $valores['usuario_id'], $valores['CedulaFuncionario'], $valores['areald']);
-    $stmt->execute();
 
-    // Si todo fue bien, commit a la transacción.
-    $conex->commit();
-    deliver_response(201, "Funcionario creado", NULL);
-} catch (Exception $e) {
-    // Si algo falla, hacer rollback a la transacción.
-    $conex->rollback();
-    deliver_response(500, "Error interno del servidor", $e->getMessage());
-}
+	// Execute query over user table
+	$regis = mysqli_query($conex, $auxSql);
+	if(!$regis) {
+        // Display error information in json format
+		deliver_response(500,"Internal Server Error",mysqli_error($conex));
+	}else{
+		// Get data encomienda from server.
+		$enco = mysqli_fetch_array($regis);
 
-// Función para enviar la respuesta.
-function deliver_response($status, $status_message, $data) {
-    header("HTTP/1.1 $status $status_message");
-    $response = [
-        'status' => $status,
-        'status_message' => $status_message,
-        'data' => $data
-    ];
-    echo json_encode($response);
-}
+		// Prepare data package like associative array
+		$funcionario = array('funcionarioId'=>$enco['funcionarioId'],
+						    'correoInstitucional'=>$enco['correoInstitucional'],
+						    'password'=>$enco['password'],
+						    'cedulaFuncionario'=>$enco['cedulaFuncionario'],
+                            'areaId'=>$enco['areaId'],
+                            'rol_id'=>$enco['rol_id']);
+
+		// Release memory from data query again
+		mysqli_free_result($regis);
+
+        //display user data in json format and http request proccess successfully
+		deliver_response(201,"Se insertó correctamente",$funcionario);
+	}
 ?>

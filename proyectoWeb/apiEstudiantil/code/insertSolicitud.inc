@@ -1,44 +1,33 @@
 <?php
-// insertSolicitud.inc
-include_once('conexion.inc'); // Incluye tu script de conexión a la base de datos.
+    // Get data written in json format
+	$data = file_get_contents("php://input");
 
-// Obtener los datos proporcionados en formato JSON.
-$data = file_get_contents("php://input");
-$valores = json_decode($data, TRUE);
+    // Convert json data into data array
+	$valores = json_decode($data,TRUE);
 
-try {
-    // Iniciar transacción.
-    $conex->begin_transaction();
+    // Prepare SQL insert instruction
+	$auxSql = "call inssolic('".$valores['motivo']."',".$valores['areaAtencion'].")";
 
-    // Preparar e insertar en la tabla 'solicitudes'.
-    $stmt = $conex->prepare("INSERT INTO solicitudes (Solicitud_id, CedulaEst, Motivo, FechaSolicitud, AreaAtencion) VALUES (?, ?, ?, ?, ?)");
-    
-    // Convertir la fecha ISO 8601 a un formato de fecha y hora MySQL (YYYY-MM-DD HH:MM:SS).
-    //$fechaSolicitud = new DateTime($valores['FechaSolicitud']);
-    //$fechaSolicitudMySQL = $fechaSolicitud->format('Y-m-d H:i:s');
-    
-    // Asegúrate de que los tipos de datos en bind_param sean correctos: 'i' para enteros, 's' para cadenas.
-    $stmt->bind_param("issds", $valores['Solicitud_id'], $valores['CedulaEst'], $valores['Motivo'], $valores['FechaSolicitud'], $valores['AreaAtencion']);
-    $stmt->execute();
 
-    // Si todo fue bien, commit a la transacción.
-    $conex->commit();
-    deliver_response(201, "Solicitud creada", NULL);
-} catch (Exception $e) {
-    // Si algo falla, hacer rollback a la transacción.
-    $conex->rollback();
-    deliver_response(500, "Error interno del servidor", $e->getMessage());
-}
+	// Execute query over user table
+	$regis = mysqli_query($conex, $auxSql);
+	if(!$regis) {
+        // Display error information in json format
+		deliver_response(500,"Internal Server Error",mysqli_error($conex));
+	}else{
+		// Get data encomienda from server.
+		$enco = mysqli_fetch_array($regis);
 
-// Función para enviar la respuesta.
-function deliver_response($status, $status_message, $data) {
-    header("HTTP/1.1 $status $status_message");
-    $response = [
-        'status' => $status,
-        'status_message' => $status_message,
-        'data' => $data
-    ];
-    echo json_encode($response);
-}
+		// Prepare data package like associative array
+		$solicitud = array('solicitud_id'=>$enco['solicitud_id'],
+						    'estudiante_id'=>$enco['estudiante_id'],
+						    'motivo'=>$enco['motivo'],
+						    'fechaSolicitud'=>$enco['fechaSolicitud'],
+                            'areaAtencion'=>$enco['areaAtencion']);
 
-?>
+		// Release memory from data query again
+		mysqli_free_result($regis);
+
+        //display user data in json format and http request proccess successfully
+		deliver_response(201,"Se insertó correctamente",$solicitud);
+	}
