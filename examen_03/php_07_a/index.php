@@ -39,10 +39,10 @@
 					// regresar datos de un estudiante
 					include_once("code/getEstudiante.inc");
 				}else if($request[0]=='estadisticas'){
-					// regresar datos de un estudiante
+					// regresar datos 
 					include_once("code/getEstadistica.inc");
 				}else if($request[0]=='elevar'){
-					// regresar datos de un estudiante
+					// regresar datos estadisticos
 					include_once("code/getElevado.inc");
 				}
 			}else if(sizeof($request)==3){
@@ -57,6 +57,9 @@
 				}else if($request[1]=='task'){
 					// task data query, using token user
 					include_once("code/lsttarea.inc");
+				}else if($request[0]=='elevar'){
+					// regresa datos elevados de acuerdo a lo indicado por el usuario
+					include_once("code/getElevado1.inc");
 				}
 			}else{
 				deliver_response(204,"No Content","Your request is empty.");
