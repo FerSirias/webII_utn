@@ -100,8 +100,9 @@ create procedure insestudiante(in ayuda  char(1),
 begin
 	set @var=(select max(persona_id) from personas);
 	insert into estudiantes(cedulaEstudiante,ayudaFamiliar,beca) values(@var,ayuda,beca);
-    set @conce=(select max(estudiante_id) from estudiantes);
-    insert into cursos(estudiante_id,cantCursos,codCuatri) values(@conce,cursos,cuatri);
+    set @conce1=(select max(estudiante_id) from estudiantes);
+    insert into cursos(estudiante_id,cantCursos,codCuatri) values(@conce1,cursos,cuatri);
+    SELECT * FROM areaestudiantil.estudiantes where estudiante_id= @conce1 order by estudiante_id desc limit 1;
 end//
 delimiter ;
 
@@ -120,9 +121,10 @@ create procedure insfunc(in func   smallint unsigned,
                          in area   tinyint unsigned,
                          in rol    tinyint unsigned)
 begin
-	set @var=(select max(persona_id) from personas);
+	set @var1=(select max(persona_id) from personas);
 	insert into funcionarios(funcionarioId,correoInstitucional,password,cedulaFuncionario,areaId,rol_id) 
-    values(func,correo,md5(clave),@var,area,rol);
+    values(func,correo,md5(clave),@var1,area,rol);
+    SELECT * FROM areaestudiantil.funcionarios where funcionarioId= func order by funcionarioId desc limit 1;
 end$$
 delimiter ;
 
@@ -135,9 +137,11 @@ delimiter $$
 create procedure inssolic(in motivo varchar(100), 
 						  in areaA  tinyint unsigned)
 begin
-	set @var=(select max(estudiante_id) from estudiantes);
+	set @var2=(select max(estudiante_id) from estudiantes);
 	insert into solicitudes(estudiante_id,motivo,fechaSolicitud,areaAtencion) 
-    values(@var,motivo,now(),areaA);
+    values(@var2,motivo,now(),areaA);
+    set @soli =(select max(solicitud_id) from solicitudes);
+	SELECT * FROM areaestudiantil.solicitudes where solicitud_id= @soli order by solicitud_id desc limit 1;
 end$$
 delimiter ;
 
@@ -150,9 +154,11 @@ delimiter //
 create procedure inscita (in fecha datetime,
 						  in status char(1))
 begin
-	set @var=(select max(solicitud_id) from solicitudes);
-    set @conce=(select max(funcionarioId) from funcionarios);
-	insert into citas(solicitud_id,funcionarioId,fechaCita,status) values(@var,@conce,fecha,status);
+	set @var3=(select max(solicitud_id) from solicitudes);
+    set @conce2=(select max(funcionarioId) from funcionarios);
+	insert into citas(solicitud_id,funcionarioId,fechaCita,status) values(@var3,@conce2,fecha,status);
+    set @cita =(select max(citaId) from citas);
+    SELECT * FROM areaestudiantil.citas where citaId= @cita order by citaId desc limit 1;
 end//
 delimiter ;
 
@@ -164,9 +170,11 @@ create procedure insinforme(in descripcion text,
 						    in inicio datetime,
                             in final datetime)
 begin
-	set @var=(select max(citaId) from citas);
+	set @var4=(select max(citaId) from citas);
 	insert into informes(citaId,descripcion,inicio,final) 
-    values(@var,descripcion,inicio,final);
+    values(@var4,descripcion,inicio,final);
+    set @info =(select max(citaId) from informes);
+	SELECT * FROM areaestudiantil.informes where citaId= @info order by citaId desc limit 1;
 end$$
 delimiter ;
 
@@ -182,6 +190,7 @@ begin
     SET fechaCita = fecha,
 		status = statu
     WHERE citaId = cita;
+    SELECT * FROM areaestudiantil.citas where citaId= cita order by citaId desc limit 1;
 end$$
 delimiter ;
 
@@ -217,6 +226,36 @@ delimiter ;
 
 /*Call deletesoli(1);
 select * from solicitudes;*/
+
+delimiter //
+create procedure selectsoli(in solic smallint unsigned)
+begin
+    SELECT * FROM areaestudiantil.solicitudes where solicitud_id= solic;
+end //
+delimiter ;
+
+/*Call selectsoli(3);
+select * from solicitudes;*/
+
+delimiter //
+create procedure selectcita(in cita smallint unsigned)
+begin
+    SELECT * FROM areaestudiantil.citas where citaId= cita;
+end //
+delimiter ;
+
+/*Call selectcita(2);
+select * from citas;*/
+
+delimiter //
+create procedure selectinfo(in cita smallint unsigned)
+begin
+    SELECT * FROM areaestudiantil.informes where citaId= cita;
+end //
+delimiter ;
+
+/*Call selectinfo(2);
+select * from informes;*/  
 
 Insert into areas(areaId,nombre)
 values(1,'Psicología');

@@ -9,9 +9,9 @@
 	switch ($method){
 		case 'PUT':
 			if(sizeof($request)==2){
-				// update encomienda
-				if($request[1]=='update'){
-					include_once("code/updEnco.inc");
+				// para actualizar datos de una cita
+				if($request[1]=='modificar'){
+					include_once("code/updateCita.inc");
 				}
 			}else if(sizeof($request)==3){
 				if($request[2]=='task'){
@@ -25,21 +25,34 @@
 				if($request[0]=='estudiante'){
 					// insertar datos de un estudiante
 					include_once("code/insertEstudiante.inc");
-				}
-			}else if(sizeof($request)==2){
-				if($request[1]=='funcionario'){
+				}else if($request[0]=='funcionario'){
 					// insertar datos de un funcionario
 					include_once("code/insertFuncionario.inc");
-				}
-			}else if(sizeof($request)==3){
-				if($request[2]=='solicitud'){
+				}else if($request[0]=='solicitud'){
 					// insertar datos de una solicitud
 					include_once("code/insertSolicitud.inc");
+				}else if($request[0]=='cita'){
+					// insertar datos de una cita
+					include_once("code/insertCita.inc");
+				}else if($request[0]=='informe'){
+					// insertar datos de un informe
+					include_once("code/insertInforme.inc");
 				}
 			}
 			break;
 	  	case 'GET':
-			if(sizeof($request)==3){
+			if(sizeof($request)==1){
+				if($request[0]=='solicitud'){
+					// para consultar una solicitud específica
+					include_once("code/selectSolicitud.inc");
+				}else if($request[0]=='cita'){
+					// para consultar una cita específica
+					include_once("code/selectCita.inc");
+				}else if($request[0]=='informe'){
+					// para consultar un informe específico
+					include_once("code/selectInforme.inc");
+				}
+			}else if(sizeof($request)==3){
 				if($request[0]=='login'){
 					// user authentication retrieves token
 					include_once("code/login.inc");
@@ -57,10 +70,16 @@
 			}
 			break;
 	   	case 'DELETE':
-			if(sizeof($request)==2){
-				if($request[1]=='task'){
-					// remove task from todo list
-					include_once("code/deltarea.inc");
+			if(sizeof($request)==1){
+				if($request[0]=='informe'){
+					// para borrar un informe de la BD
+					include_once("code/deleteInforme.inc");
+				}else if($request[0]=='cita'){
+					// para borrar una cita de la BD
+					include_once("code/deleteCita.inc");
+				}else if($request[0]=='solicitud'){
+					// para borrar una solicitud de la BD
+					include_once("code/deleteSolicitud.inc");
 				}
 			}
 			break;
@@ -78,7 +97,7 @@
 		$response["status"]=$status;
 		$response["status_message"]=$status_message;
 		$response["data"]=$data;
-		$response["author"]="fer";
+		$response["author"]="Fernanda Sirias, Admin";
 
 		$json_response=json_encode($response);
 		echo $json_response;
